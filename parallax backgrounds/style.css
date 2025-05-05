@@ -4,8 +4,8 @@ body{
 #canvas1 {
     position: absolute;
     border: 3px solid white;
-    width: 500px;
-    height: 300px;
+    width: 800px/2;
+    height: 700px/2;
     transform: translate(-50%,-50%);
     top: 50%;
     left: 50%;
