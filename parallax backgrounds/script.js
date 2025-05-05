@@ -23,12 +23,16 @@ const spriteWidth = 2400;//2400-px/1
 const spriteHeight = 720;//720-px/1
 
 let x = 0;
+let x2 = 2400;
 function animate(){
     ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
     //ctx.drawImage(playerImage, frameX, frameY, spriteWidth, spriteHeight, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     ctx.drawImage(backgroundLayer4, x, 0, spriteWidth, spriteHeight, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    ctx.drawImage(backgroundLayer4, x2, 0, spriteWidth, spriteHeight, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     if (x < -2400) x = 2400;
     else x -= gameSpeed;
+    if (x2 < -2400) x2 = 2400;
+    else x2 -= gameSpeed;
     requestAnimationFrame(animate);
 }
 animate();
