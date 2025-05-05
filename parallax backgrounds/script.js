@@ -2,7 +2,7 @@ const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 const CANVAS_WIDTH = canvas.width =800/2;
 const CANVAS_HEIGHT = canvas.height =700/2;
-let gameSpeed = 15;
+let gameSpeed = 5;
 
 const backgroundLayer1 = new Image();
 backgroundLayer1.src = 'img/layer-1.png';
@@ -18,6 +18,15 @@ backgroundLayer4.src = 'img/layer-4.png';
 
 const backgroundLayer5 = new Image();
 backgroundLayer5.src = 'img/layer-5.png';
+
+const slider = document.getElementById('slider');
+slider.value = gameSpeed;
+const showGameSpeed = document.getElementById('showGameSpeed')
+showGameSpeed.innerHTML = gameSpeed;
+slider.addEventListener('change', function(e){
+    gameSpeed = e.target.value;
+    showGameSpeed.innerHTML = e.target.value;
+});
 
 const spriteWidth = 2400/2;//2400-px/2
 const spriteHeight = 720/2;//720-px/2
