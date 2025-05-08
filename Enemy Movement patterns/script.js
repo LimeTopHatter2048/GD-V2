@@ -8,6 +8,7 @@ const enemiesArray = [];
 
 const enemyImage = new Image();
 enemyImage.src = 'img/enemy1.png';
+let gameFrame = 0;
 
 class Enemy {
     constructor(){
@@ -18,14 +19,19 @@ class Enemy {
         this.spriteHeight = 155;
         this.width = this.spriteWidth/3;
         this.height = this.spriteHeight/3;
+        this.frame = 0;
     }
     update(){
         this.x += this.speed;
         this.y += this.speed;
+        // animate sprites
+        if (gameFrame % 3 === 0){
+            this.frame > 4 ? this.frame = 0 : this.frame++;
+        }
     }
     draw(){
         ctx.strokeRect(this.x, this.y, this.width, this.height);
-        ctx.drawImage(enemyImage, 0, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
+        ctx.drawImage(enemyImage, this.frame * this.spriteWidth, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
     }
 };
 
@@ -40,6 +46,7 @@ function animate(){
         enemy.update();
         enemy.draw();
     });
+    gameFrame++;
     requestAnimationFrame(animate);
 }
 animate();
