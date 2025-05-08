@@ -36,6 +36,7 @@ function animate(timestamp){
         timeToNextRaven = 0;
         console.log(ravens);
     };
+    console.log(timestamp);
     requestAnimationFrame(animate);
 }
-animate();
+animate(0);
