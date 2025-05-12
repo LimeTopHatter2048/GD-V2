@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded',function(){
+window.addEventListener('load',function(){
     const canvas = document.getElementById('canvas1');
     const ctx = canvas.getContext('2d');
     canvas.width = 500;
@@ -10,13 +10,22 @@ document.addEventListener('DOMContentLoaded',function(){
             this.width = width;
             this.height = height;
             this.enemies = [];
-            this.#addNewEnemy();
+            this.enemyInterval = 20;
+            this.enemyTimer = 0;
         }
-        update(){
+        update(deltaTime){
+            if (this.enemyTimer > this.enemyInterval){
+                this.#addNewEnemy();
+                this.enemyTimer = 0;
+                console.log(this.enemies);
+            } else{
+                this.enemyTimer ++;// += deltaTime;
+            }
+
             this.enemies.forEach(Object => Object.update());
         }
         draw(){
-            this.enemies.forEach(Object => Object.draw());
+            this.enemies.forEach(Object => Object.draw(this.ctx));
         }
         #addNewEnemy(){
             this.enemies.push(new Enemy(this));
@@ -35,18 +44,18 @@ document.addEventListener('DOMContentLoaded',function(){
         update(){
             this.x--;
         }
-        draw(){
+        draw(ctx){
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
     }
 
     const game = new Game(ctx, canvas.width, canvas.height);
-    let lastTime = 1;
+    let lastTime = 0;
     function animate(timeStamp){
         ctx.clearRect(0,0, canvas.width, canvas.height);
         const deltaTime = timeStamp - lastTime;
         lastTime = timeStamp;
-        game.update();
+        game.update(deltaTime);
         game.draw();
         //some code
         requestAnimationFrame(animate);
