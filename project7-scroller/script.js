@@ -8,7 +8,7 @@ window.addEventListener('load', function(){
         //keyboard events, array of all active keys
         constructor(){
             this.keys = [];
-            window.addEventListener('keydown', function(e){
+            window.addEventListener('keydown', e =>{
                 if (e.key === 'ArrowDown'){
                     this.keys.push(e.key);
                 }
