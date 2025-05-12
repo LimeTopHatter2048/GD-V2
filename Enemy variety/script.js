@@ -78,6 +78,19 @@ window.addEventListener('load',function(){
             this.y=Math.random() * this.game.height * 0.5;
             this.image = ghost;
             this.vx =Math.random() * 0.1 + 0.1;
+            this.angle = 0;
+            this.curve = Math.random() * 3;
+        }
+        update(deltaTime){
+            super.update(deltaTime);
+            this.y += Math.sin(this.angle) * this.curve;
+            this.angle += 0.05;
+        }
+        draw(){
+            ctx.save();
+            ctx.globalAlpha = 0.1;
+            super.draw(ctx);
+            ctx.restore();
         }
     }
 
