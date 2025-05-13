@@ -97,7 +97,7 @@ window.addEventListener('load', function(){
         }
         draw(context){
             context.drawImage(this.image, this.x, this.y, this.width, this.height);
-            context.drawImage(this.image, this.x + this.width, this.y, this.width, this.height);
+            context.drawImage(this.image, this.x + this.width - this.speed, this.y, this.width, this.height);
         }
         update(){
             this.x -= this.speed;
