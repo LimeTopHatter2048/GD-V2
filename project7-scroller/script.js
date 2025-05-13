@@ -3,6 +3,7 @@ window.addEventListener('load', function(){
     const ctx = canvas.getContext('2d');
     canvas.width = 500;
     canvas.height = 500;
+    let enemies = [];
 
     class InputHandler {
         //keyboard events, array of all active keys
@@ -107,18 +108,35 @@ window.addEventListener('load', function(){
     }
     class Enemy {
         //generate enemies
-        constructor(){
-
+        constructor(gameWidth, gameHeight){
+            this.gameWidth = gameWidth;
+            this.gameHeight = gameHeight;
+            this.image = document.getElementById('enemyImage');
+            this.spriteWidth = 160; //160
+            this.spriteHeight = 119; //119
+            this.width = this.spriteWidth/1.4;
+            this.height = this.spriteHeight/1.4;
+            this.x = this.gameWidth;
+            this.y = this.gameHeight - this.height;
+            this.frameX = 0;
+            this.speed = 0;
+        }
+        draw(context){
+            context.drawImage(this.image, this.frameX * this.spriteWidth, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
         }
         update(){
-
-        }
-        draw(){
-            
+            this.x--;
         }
     }
+
+    enemies.push(new Enemy(canvas.width, canvas.height));
     function handleEnemies(){
         //adding, animating and removing enemies
+        
+        enemies.forEach(enemy => {
+            enemy.draw(ctx);
+            enemy.update();
+        })
     }
     function displayStatusText(){
         //display score or game over message
@@ -135,6 +153,7 @@ window.addEventListener('load', function(){
         background.update()
         player.draw(ctx);
         player.update(input);
+        handleEnemies();
         requestAnimationFrame(animate);
     }
     animate();
