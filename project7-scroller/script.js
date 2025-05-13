@@ -51,7 +51,7 @@ window.addEventListener('load', function(){
             context.fillRect(this.x, this.y, this.width, this.height);
             context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
         }
-        update(){
+        update(input){
             if (input.keys.indexOf('ArrowRight') > -1){
                 this.speed = 5;
             } else if (input.keys.indexOf('ArrowLeft') > -1){
@@ -83,15 +83,27 @@ window.addEventListener('load', function(){
     }
     class Background {
         //endless scrolling backgrounds
-        constructor(){
-
+        constructor(gameWidth, gameHeight){
+            this.gameWidth = gameWidth;
+            this.gameHeight = gameHeight;
+            this.image = document.getElementById('backgroundImage');
+            this.spriteWidth = 2400; //2400
+            this.spriteHeight = 720; //720
+            this.width = this.spriteWidth/1.4;
+            this.height = this.spriteHeight/1.4;
+            this.x = 0;
+            this.y = 0;
+            this.speed = 20;
+        }
+        draw(context){
+            context.drawImage(this.image, this.x, this.y, this.width, this.height);
+            context.drawImage(this.image, this.x + this.width, this.y, this.width, this.height);
         }
         update(){
-
+            this.x -= this.speed;
+            if (this.x < 0 - this.width) this.x = 0;
         }
-        draw(){
-            
-        }
+        
     }
     class Enemy {
         //generate enemies
@@ -114,12 +126,15 @@ window.addEventListener('load', function(){
 
     const input = new InputHandler();
     const player = new Player(canvas.width, canvas.height);
+    const background = new Background(canvas.width, canvas.height);
 
     function animate(){
         // main animation loop 60 times per second updating & drawing
         ctx.clearRect(0,0,canvas.width,canvas.height);
+        background.draw(ctx);
+        background.update()
         player.draw(ctx);
-        player.update();
+        player.update(input);
         requestAnimationFrame(animate);
     }
     animate();
