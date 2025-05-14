@@ -5,7 +5,7 @@
 } else if (input === 'ArrowDown' && player.isJumping){
     // dive
 } */
-
+import Player from "./player.js";
 window.addEventListener('load', function(){
     const loading = document.getElementById('loading');
     loading.style.display = "none";
@@ -13,4 +13,7 @@ window.addEventListener('load', function(){
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
+    const player = new Player(canvas.width, canvas.height);
+    player.draw(ctx);
 });
