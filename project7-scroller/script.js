@@ -11,6 +11,8 @@ window.addEventListener('load', function(){
         //keyboard events, array of all active keys
         constructor(){
             this.keys = [];
+            this.touchY = '';
+            this.touchTreshold = 30;
             window.addEventListener('keydown', e =>{
                 if ((   e.key === 'ArrowDown' || 
                         e.key === 'ArrowUp' || 
@@ -19,7 +21,6 @@ window.addEventListener('load', function(){
                         && this.keys.indexOf(e.key) === -1){
                     this.keys.push(e.key);
                 } else if (e.key === 'Enter' && gameOver) restartGame();
-                console.log(e.key, this.keys);
             });
             window.addEventListener('keyup', e =>{
                 if (    e.key === 'ArrowDown' || 
@@ -28,7 +29,15 @@ window.addEventListener('load', function(){
                         e.key === 'ArrowRight'){
                     this.keys.splice(this.keys.indexOf(e.key), 1);
                 }
-                console.log(e.key, this.keys);
+            });
+            window.addEventListener('touchstart', e => {
+                console.log(e.changedTouches[0].pageY);
+            });
+            window.addEventListener('touchmove', e => {
+                console.log(e.changedTouches[0].pageY);
+            });
+            window.addEventListener('touchend', e => {
+                console.log(e.changedTouches[0].pageY);
             });
         }
     }
@@ -194,7 +203,6 @@ window.addEventListener('load', function(){
         //adding, animating and removing enemies
         if (enemyTimer > enemyInterval + randomEnemyInterval){
             enemies.push(new Enemy(canvas.width, canvas.height));
-            console.log(enemies);
             randomEnemyInterval = Math.random() * 1000 + 500;
             enemyTimer =0;
         } else {
