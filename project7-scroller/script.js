@@ -18,7 +18,7 @@ window.addEventListener('load', function(){
                         e.key === 'ArrowRight') 
                         && this.keys.indexOf(e.key) === -1){
                     this.keys.push(e.key);
-                }
+                } else if (e.key === 'Enter' && gameOver) restartGame();
                 console.log(e.key, this.keys);
             });
             window.addEventListener('keyup', e =>{
@@ -44,6 +44,7 @@ window.addEventListener('load', function(){
             this.y = this.gameHeight - this.height;
             this.image = document.getElementById("playerImage");
             this.frameX = 0;
+            this.maxFrame = 8;
             this.frameY = 0;
             this.fps = 20;
             this.frameTimer = 0;
@@ -51,6 +52,12 @@ window.addEventListener('load', function(){
             this.speed = 0;
             this.vy = 0;
             this.weight = 1;
+        }
+        restart(){
+            this.x = 20;
+            this.y = this.gameHeight - this.height;
+            this.maxFrame = 8;
+            this.frameY = 0;
         }
         draw(context){
             context.strokeStyle = "white";
@@ -124,6 +131,9 @@ window.addEventListener('load', function(){
             this.x = 0;
             this.y = 0;
             this.speed = 20;
+        }
+        restart(){
+            this.x = 0;
         }
         draw(context){
             context.drawImage(this.image, this.x, this.y, this.width, this.height);
@@ -210,6 +220,15 @@ window.addEventListener('load', function(){
             context.fillStyle = "white";
             context.fillText('GAME OVER, try again!', canvas.width/2 + 2, 202);
         }
+    }
+
+    function restartGame(){
+        player.restart();
+        background.restart();
+        enemies = [];
+        score = 0;
+        gameOver = false;
+        animate(0);
     }
 
     const input = new InputHandler();
