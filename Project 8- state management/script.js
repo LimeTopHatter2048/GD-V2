@@ -6,6 +6,8 @@
     // dive
 } */
 import Player from "./player.js";
+import InputHandler from "./input.js";
+
 window.addEventListener('load', function(){
     const loading = document.getElementById('loading');
     loading.style.display = "none";
@@ -16,4 +18,11 @@ window.addEventListener('load', function(){
 
     const player = new Player(canvas.width, canvas.height);
     player.draw(ctx);
+    const input = new InputHandler();
+
+    function animate(){
+        console.log(input.lastKey);
+        requestAnimationFrame(animate);
+    };
+    animate()
 });
