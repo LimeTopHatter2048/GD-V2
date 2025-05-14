@@ -1,11 +1,12 @@
 window.addEventListener('load', function(){
     const canvas = this.document.getElementById('canvas1');
     const ctx = canvas.getContext('2d');
-    canvas.width = 500;
+    canvas.width = 600;
     canvas.height = 500;
     let enemies = [];
     let score = 0;
     let gameOver = false;
+    const fullScreenButton = document.getElementById('fullScreenButton');
 
     class InputHandler {
         //keyboard events, array of all active keys
@@ -54,8 +55,8 @@ window.addEventListener('load', function(){
             this.gameHeight = gameHeight;
             this.spriteWidth = 200; //1800/9
             this.spriteHeight = 200; //400/2
-            this.width = 100;
-            this.height = 100;
+            this.width = this.spriteWidth/2.4;
+            this.height = this.spriteHeight/2.4;
             this.x = 20;
             this.y = this.gameHeight - this.height;
             this.image = document.getElementById("playerImage");
@@ -108,7 +109,7 @@ window.addEventListener('load', function(){
             } else if (input.keys.indexOf('ArrowLeft') > -1){
                 this.speed = -5;
             } else if ((input.keys.indexOf('ArrowUp') > -1 || input.keys.indexOf('swipe up') > -1) && this.onGround()){
-                this.vy = -20;
+                this.vy = -25;
             } else {
                 this.speed = 0;
             }
@@ -169,8 +170,8 @@ window.addEventListener('load', function(){
             this.image = document.getElementById('enemyImage');
             this.spriteWidth = 160; //160
             this.spriteHeight = 119; //119
-            this.width = this.spriteWidth/1.4;
-            this.height = this.spriteHeight/1.4;
+            this.width = this.spriteWidth/2;
+            this.height = this.spriteHeight/2;
             this.x = this.gameWidth;
             this.y = this.gameHeight - this.height;
             this.frameX = 0;
@@ -178,7 +179,7 @@ window.addEventListener('load', function(){
             this.fps = 20;
             this.frameTimer = 0;
             this.frameInterval = 1000/this.fps;
-            this.speed = 1;
+            this.speed = 2;
             this.markedForDeletion = false;
         }
         draw(context){
@@ -210,7 +211,7 @@ window.addEventListener('load', function(){
         //adding, animating and removing enemies
         if (enemyTimer > enemyInterval + randomEnemyInterval){
             enemies.push(new Enemy(canvas.width, canvas.height));
-            randomEnemyInterval = Math.random() * 1000 + 500;
+            randomEnemyInterval = Math.random() * 1000 + 1000;
             enemyTimer =0;
         } else {
             enemyTimer += deltaTime;
@@ -245,6 +246,17 @@ window.addEventListener('load', function(){
         gameOver = false;
         animate(0);
     }
+    function toggleFullScreen(){
+        console.log(document.fullscreenElement);
+        if (!document.fullscreenElement){
+            canvas.requestFullscreen().then().catch(err => {
+                alert(`Error, can't enable full-screen node: ${err.message}`)
+            })
+        } else {
+            document.exitFullscreen();
+        }
+    }
+    fullScreenButton.addEventListener('click', toggleFullScreen);
 
     const input = new InputHandler();
     const player = new Player(canvas.width, canvas.height);
