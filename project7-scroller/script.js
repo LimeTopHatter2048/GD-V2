@@ -139,6 +139,7 @@ window.addEventListener('load', function(){
             this.frameTimer = 0;
             this.frameInterval = 1000/this.fps;
             this.speed = 1;
+            this.markedForDeletion = false;
         }
         draw(context){
             context.drawImage(this.image, this.frameX * this.spriteWidth, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
@@ -152,6 +153,7 @@ window.addEventListener('load', function(){
                 this.frameTimer += deltaTime;
             }
             this.x -= this.speed;
+            if (this.x < 0 - this.width) this.markedForDeletion = true;
         }
     }
 
@@ -160,6 +162,8 @@ window.addEventListener('load', function(){
         //adding, animating and removing enemies
         if (enemyTimer > enemyInterval + randomEnemyInterval){
             enemies.push(new Enemy(canvas.width, canvas.height));
+            console.log(enemies);
+            randomEnemyInterval = Math.random() * 1000 + 500;
             enemyTimer =0;
         } else {
             enemyTimer += deltaTime;
@@ -167,7 +171,8 @@ window.addEventListener('load', function(){
         enemies.forEach(enemy => {
             enemy.draw(ctx);
             enemy.update(deltaTime);
-        })
+        });
+        enemies = enemies.filter(enemy => !enemy.markedForDeletion);
     }
     function displayStatusText(){
         //display score or game over message
