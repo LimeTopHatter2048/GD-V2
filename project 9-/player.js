@@ -1,17 +1,19 @@
 export class Player {
     constructor(game){
         this.game = game
+        this.image = document.getElementById("player");
         this.spriteWidth = 100;
         this.spriteHeight = 91.3;
         this.width = this.spriteWidth/2;
         this.height = this.spriteHeight/2;
-        this.x = 0
-        this.y = 100;
+        this.x = this.game.width/2 - this.width/2;
+        this.y = this.game.height - this.height;
     }
     update(){
-
+        this.x++;
     }
     draw(context){
+        context.fillStyle = 'red';
         context.fillRect(this.x, this.y, this.width, this.height);
     }
 }
