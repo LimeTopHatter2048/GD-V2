@@ -20,8 +20,14 @@ export class Player {
         this.maxSpeed = 10;
         this.markedForDeletion = false;
     }
-    update(){
-        this.x++;
+    update(input){
+        // horizontal movement
+        this.x += this.speed;
+        if (input.includes('ArrowRight')) this.speed = this.maxSpeed;
+        else if (input.includes('ArrowLeft')) this.speed = -this.maxSpeed;
+        else this.speed = 0;
+        if (this.x < 0) this.x = 0;
+        if (this.x > this.game.width - this.width) this.x = this.game.width - this.width;
     }
     draw(context){
         context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
