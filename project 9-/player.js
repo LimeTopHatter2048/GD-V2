@@ -1,4 +1,4 @@
-import { Sitting } from "./playerStates.js";
+import { Sitting, Running } from "./playerStates.js";
 
 export class Player {
     constructor(game){
@@ -15,7 +15,7 @@ export class Player {
         this.frameX = 0;
         this.frameY = 0;
         this.maxFrame= 6;
-        this.states = [new Sitting(this)];
+        this.states = [new Sitting(this), new Running(this)];
         this.currentState = this.states[0];
         this.currentState.enter();
         this.fps = 0.000005;
@@ -49,7 +49,7 @@ export class Player {
         return this.y >= this.game.height - this.height;
     }
     setState(state){
-        this.currentState = this.state[state];
+        this.currentState = this.states[state];
         this.currentState.enter();
     }
 }
