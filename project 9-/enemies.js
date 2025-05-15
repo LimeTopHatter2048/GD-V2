@@ -5,10 +5,11 @@ class Enemy {
         this.fps = 20;
         this.frameInterval = 1000/this.fps;
         this.frameTimer = 0;
+        this.markedForDeletion = false;
     }
     update(deltaTime){
         // movement
-        this.x += this.speedX;
+        this.x -= this.speedX;
         this.y += this.speedY;
         if (this.frameTimer > this.frameInterval){
             this.frameTimer = 0;
@@ -17,6 +18,8 @@ class Enemy {
         } else {
             this.frameTimer += deltaTime;
         }
+        // check if off screen
+        if (this.x + this.width < 0) this.markedForDeletion = true;
     }
     draw(context){
         context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
@@ -28,6 +31,7 @@ export class FlyingEnemy extends Enemy {
         super();
         this.game = game;
         this.image = document.getElementById("enemy_fly");
+        this.maxFrame = 5;
         this.spriteWidth = 60;
         this.spriteHeight = 44;
         this.width = this.spriteWidth/1.2;
@@ -38,7 +42,6 @@ export class FlyingEnemy extends Enemy {
         this.speedX = 2;
         this.speedY = 0;
         this.maxSpeed = 10;
-        this.markedForDeletion = false;
     }
     update(deltaTime){
         super.update(deltaTime);
