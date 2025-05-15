@@ -1,0 +1,54 @@
+class Enemy {
+    constructor(){
+        this.frameX = 0;
+        this.frameY = 0;
+        this.fps = 20;
+        this.frameInterval = 1000/this.fps;
+        this.frameTimer = 0;
+    }
+    update(deltaTime){
+        // movement
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.frameTimer > this.frameInterval){
+            this.frameTimer = 0;
+            if (this.frameX < this.maxFrame) this.frameX++;
+            else this.frameX = 0;
+        } else {
+            this.frameTimer += deltaTime;
+        }
+    }
+    draw(context){
+        context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
+    }
+}
+
+export class FlyingEnemy extends Enemy {
+    constructor(game){
+        super();
+        this.game = game;
+        this.image = document.getElementById("enemy_fly");
+        this.spriteWidth = 60;
+        this.spriteHeight = 44;
+        this.width = this.spriteWidth/1.2;
+        this.height = this.spriteHeight/1.2;
+        this.x = this.game.width;
+        this.y = this.game.height - this.height - this.game.groundMargin;
+        this.vy = 0;
+        this.speedX = 2;
+        this.speedY = 0;
+        this.maxSpeed = 10;
+        this.markedForDeletion = false;
+    }
+    update(deltaTime){
+        super.update(deltaTime);
+    }
+}
+
+export class GroundEnemy extends Enemy {
+    
+}
+
+export class ClimbingEnemy extends Enemy {
+    
+}
