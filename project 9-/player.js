@@ -28,9 +28,19 @@ export class Player {
         else this.speed = 0;
         if (this.x < 0) this.x = 0;
         if (this.x > this.game.width - this.width) this.x = this.game.width - this.width;
+        // vertical movement
+        if (input.includes('ArrowUp') && this.onGround()) this.vy -= 30;
+        this.y += this.vy;
+        if (!this.onGround()) this.vy += this.weight;
+        else this.vy = 0;
+        if(this.y > this.game.height - this.height) this.y = this.game.height - this.height;
+
     }
     draw(context){
         context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
+    }
+    onGround(){
+        return this.y >= this.game.height - this.height;
     }
 }
 
