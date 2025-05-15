@@ -22,6 +22,8 @@ class Enemy {
         if (this.x + this.width < 0) this.markedForDeletion = true;
     }
     draw(context){
+        context.strokeStyle = 'white';
+        if (this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);
         context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
     }
 }
