@@ -9,7 +9,7 @@ class Enemy {
     }
     update(deltaTime){
         // movement
-        this.x -= this.speedX;
+        this.x -= this.speedX + this.game.speed;
         this.y += this.speedY;
         if (this.frameTimer > this.frameInterval){
             this.frameTimer = 0;
@@ -36,15 +36,18 @@ export class FlyingEnemy extends Enemy {
         this.spriteHeight = 44;
         this.width = this.spriteWidth/1.2;
         this.height = this.spriteHeight/1.2;
-        this.x = this.game.width;
-        this.y = this.game.height - this.height - this.game.groundMargin;
-        this.vy = 0;
-        this.speedX = 2;
+        this.x = this.game.width + Math.random() * this.game.width * 0.5;
+        this.y = Math.random() * this.game.height * 0.5;
+        this.speedX = Math.random() + 1;
         this.speedY = 0;
         this.maxSpeed = 10;
+        this.angle = 0;
+        this.va = Math.random() * 0.1 + 0.1;
     }
     update(deltaTime){
         super.update(deltaTime);
+        this.angle += this.va;
+        this.y += Math.sin(this.angle);
     }
 }
 
