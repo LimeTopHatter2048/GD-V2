@@ -9,7 +9,7 @@ export class Player {
         this.width = this.spriteWidth/1.2;
         this.height = this.spriteHeight/1.2;
         this.x = this.game.width/2 - this.width/2;
-        this.y = this.game.height - this.height;
+        this.y = this.game.height - this.height - this.game.groundMargin;
         this.vy = 0;
         this.weight = 1;
         this.frameX = 0;
@@ -39,7 +39,7 @@ export class Player {
         this.y += this.vy;
         if (!this.onGround()) this.vy += this.weight;
         else this.vy = 0;
-        if(this.y > this.game.height - this.height) this.y = this.game.height - this.height;
+        if(this.y > this.game.height - this.height - this.game.groundMargin) this.y = this.game.height - this.height - this.game.groundMargin;
         // sprite animation
         if (this.frameTimer > this.frameInterval){
             this.frameTimer = 0;
@@ -54,7 +54,7 @@ export class Player {
         context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
     }
     onGround(){
-        return this.y >= this.game.height - this.height;
+        return this.y >= this.game.height - this.height - this.game.groundMargin;
     }
     setState(state){
         this.currentState = this.states[state];
