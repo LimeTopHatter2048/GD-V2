@@ -1,3 +1,5 @@
+import { Sitting } from "./playerStates.js";
+
 export class Player {
     constructor(game){
         this.game = game
@@ -13,6 +15,9 @@ export class Player {
         this.frameX = 0;
         this.frameY = 0;
         this.maxFrame= 6;
+        this.states = [new Sitting(this)];
+        this.currentState = this.states[0];
+        this.currentState.enter();
         this.fps = 0.000005;
         this.frameTimer = 0;
         this.frameInterval = 1000/this.fps;
@@ -21,6 +26,7 @@ export class Player {
         this.markedForDeletion = false;
     }
     update(input){
+        this.currentState.handleInput(input);
         // horizontal movement
         this.x += this.speed;
         if (input.includes('ArrowRight')) this.speed = this.maxSpeed;
@@ -41,6 +47,10 @@ export class Player {
     }
     onGround(){
         return this.y >= this.game.height - this.height;
+    }
+    setState(state){
+        this.currentState = this.state[state];
+        this.currentState.enter();
     }
 }
 
