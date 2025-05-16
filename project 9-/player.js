@@ -1,4 +1,4 @@
-import { Sitting, Running, Jumping, Falling, Rolling } from "./playerStates.js";
+import { Sitting, Running, Jumping, Falling, Rolling, Diving } from "./playerStates.js";
 
 export class Player {
     constructor(game){
@@ -15,7 +15,7 @@ export class Player {
         this.frameX = 0;
         this.frameY = 0;
         this.maxFrame= 6;
-        this.states = [new Sitting(this.game), new Running(this.game), new Jumping(this.game), new Falling(this.game), new Rolling(this.game)];
+        this.states = [new Sitting(this.game), new Running(this.game), new Jumping(this.game), new Falling(this.game), new Rolling(this.game), new Diving(this.game)];
         this.fps = 20;
         this.frameTimer = 0;
         this.frameInterval = 1000/this.fps;
@@ -31,6 +31,7 @@ export class Player {
         if (input.includes('ArrowRight')) this.speed = this.maxSpeed;
         else if (input.includes('ArrowLeft')) this.speed = -this.maxSpeed;
         else this.speed = 0;
+        // horizontal boundaries
         if (this.x < 0) this.x = 0;
         if (this.x > this.game.width - this.width) this.x = this.game.width - this.width;
         // vertical movement
@@ -38,6 +39,7 @@ export class Player {
         this.y += this.vy;
         if (!this.onGround()) this.vy += this.weight;
         else this.vy = 0;
+        // vertical boundaries
         if(this.y > this.game.height - this.height - this.game.groundMargin) this.y = this.game.height - this.height - this.game.groundMargin;
         // sprite animation
         if (this.frameTimer > this.frameInterval){
