@@ -1,9 +1,13 @@
+import { Dust } from "./particles.js";
+
 const states = {
     SITTING: 0,
     RUNNING: 1,
     JUMPING: 2,
     FALLING: 3,
     ROLLING: 4,
+    DIVING:5,
+    HIT: 6,
 }
 
 class State {
@@ -41,6 +45,7 @@ export class Running extends State {
         this.player.frameY = 3;
     }
     handleInput(input){
+        this.game.particles.push(new Dust(this.game, this.game.player.x, this.game.player.y));
         if (input.includes('ArrowDown')){
             this.player.setState(states.SITTING, 0);
         } else if (input.includes('ArrowUp')){
