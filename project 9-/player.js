@@ -18,6 +18,7 @@ export class Player {
         this.frameY = 0;
         this.maxFrame= 6;
         this.states = [new Sitting(this.game), new Running(this.game), new Jumping(this.game), new Falling(this.game), new Rolling(this.game), new Diving(this.game), new Hit(this.game)];
+        this.currentState = null; // ?
         this.fps = 20;
         this.frameTimer = 0;
         this.frameInterval = 1000/this.fps;
@@ -80,6 +81,7 @@ export class Player {
                     this.game.floatingMessages.push(new FloatingMessage('+1', enemy.x, enemy.y, 150, 50));
                 } else {
                     this.setState(6, 0);
+                    this.game.score+=this.game.subScore;
                     this.game.lives--;
                     if (this.game.lives <= 0) this.game.gameOver = true;
                 }
